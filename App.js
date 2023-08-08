@@ -5,10 +5,47 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
-import Subtitle from "./components/typography/Subtitle";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoriteScreen from "./screens/FavoriteScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
-
+const Drawer = createDrawerNavigator();
+const DreawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f3f25" },
+        drawerContentStyle: { backgroundColor: "#351401" },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#9d6645",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "Meal Category",
+          drawerIcon: ({ color, size }) => {
+            <Ionicons name="list" color={color} size={size} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoriteScreen}
+        options={{
+          drawerIcon: ({ color, size }) => {
+            <Ionicons name="star" color={color} size={size} />;
+          },
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
 export default function App() {
   return (
     <>
@@ -22,10 +59,10 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="Meals Categories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DreawerNavigator}
             options={{
-              title: "Meals",
+              headerShown: false,
             }}
           />
           <Stack.Screen
